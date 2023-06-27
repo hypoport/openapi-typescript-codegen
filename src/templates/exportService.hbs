@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { AxiosResponse } from 'axios';
 
 {{#each imports}}
+{{#if (isEqual this 'CreateAuthTokenRequestModel')}}
+{{else}}
 import { {{{this}}} } from '../../../models';
+{{/if}}
 {{/each}}
 import { HttpClient } from '../../http/http-client';
 
