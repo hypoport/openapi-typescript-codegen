@@ -1,5 +1,5 @@
 {
-    "name": "openapi-typescript-codegen",
+    "name": "@hypoport/openapi-typescript-codegen",
     "version": "0.24.0",
     "description": "Library that generates Typescript clients based on the OpenAPI specification.",
     "author": "Ferdi Koomen",
@@ -57,7 +57,9 @@
         "eslint:fix": "eslint . --fix",
         "prepublishOnly": "npm run clean && npm run release",
         "codecov": "codecov --token=66c30c23-8954-4892-bef9-fbaed0a2e42b",
-        "docker": "docker build -t eeelenbaas/openapi-typescript-codegen ."
+        "docker": "docker build -t eeelenbaas/openapi-typescript-codegen .",
+        "snapshot:publish": "npm run snapshot:version && npm publish --tag snapshot",
+        "snapshot:version": "npm version prerelease --preid snapshot --git-tag-version=false"
     },
     "dependencies": {
         "camelcase": "^6.3.0",
@@ -121,7 +123,7 @@
         "typescript": "4.9.5",
         "zone.js": "0.13.1"
     },
-    "overrides" : {
+    "overrides": {
         "node-fetch": "2.6.9",
         "rollup": "3.20.2",
         "typescript": "4.9.5"

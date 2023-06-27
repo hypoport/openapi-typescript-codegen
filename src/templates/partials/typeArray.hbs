@@ -1,5 +1,5 @@
 {{~#if link~}}
-Array<{{>type link}}>{{>isNullable}}
+{{>type link}}{{>isNullable}}[]
 {{~else~}}
-Array<{{>base}}>{{>isNullable}}
+{{>base}}{{>isNullable}}[]
 {{~/if~}}

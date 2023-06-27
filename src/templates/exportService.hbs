@@ -1,152 +1,73 @@
-{{>header}}
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { AxiosResponse } from 'axios';
 
-{{#equals @root.httpClient 'angular'}}
-{{#if @root.exportClient}}
-import { Injectable } from '@angular/core';
-import type { Observable } from 'rxjs';
-{{else}}
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import type { Observable } from 'rxjs';
-{{/if}}
-
-{{/equals}}
-{{#if imports}}
 {{#each imports}}
-import type { {{{this}}} } from '../models/{{{this}}}';
+import { {{{this}}} } from '../../../models';
 {{/each}}
+import { HttpClient } from '../../http/http-client';
 
-{{/if}}
-{{#notEquals @root.httpClient 'angular'}}
-import type { CancelablePromise } from '../core/CancelablePromise';
-{{/notEquals}}
-{{#if @root.exportClient}}
-{{#equals @root.httpClient 'angular'}}
-import { BaseHttpRequest } from '../core/BaseHttpRequest';
-{{else}}
-import type { BaseHttpRequest } from '../core/BaseHttpRequest';
-{{/equals}}
-{{else}}
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
-{{/if}}
+export type {{{name}}}{{{@root.postfix}}} = ReturnType<typeof {{{lowerCase name}}}{{{@root.postfix}}}Factory>;
+export type {{{name}}}{{{@root.postfix}}}Options = {
+  baseUrl: string;
+  httpClient: HttpClient;
+};
 
-{{#equals @root.httpClient 'angular'}}
-@Injectable({
-  providedIn: 'root',
-})
-{{/equals}}
-export class {{{name}}}{{{@root.postfix}}} {
-	{{#if @root.exportClient}}
-
-	constructor(public readonly httpRequest: BaseHttpRequest) {}
-	{{else}}
-	{{#equals @root.httpClient 'angular'}}
-
-	constructor(public readonly http: HttpClient) {}
-	{{/equals}}
-	{{/if}}
-
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpClient }: {{{name}}}{{{@root.postfix}}}Options) => ({
 	{{#each operations}}
-	/**
-	{{#if deprecated}}
-	 * @deprecated
-	{{/if}}
-	{{#if summary}}
-	 * {{{escapeComment summary}}}
-	{{/if}}
-	{{#if description}}
-	 * {{{escapeComment description}}}
-	{{/if}}
-	{{#unless @root.useOptions}}
-	{{#if parameters}}
-	{{#each parameters}}
-	 * @param {{{name}}} {{#if description}}{{{escapeComment description}}}{{/if}}
-	{{/each}}
-	{{/if}}
-	{{/unless}}
-	{{#each results}}
-	 * @returns {{{type}}} {{#if description}}{{{escapeComment description}}}{{/if}}
-	{{/each}}
-	 * @throws ApiError
-	 */
-	{{#if @root.exportClient}}
-	{{#equals @root.httpClient 'angular'}}
-	public {{{name}}}({{>parameters}}): Observable<{{>result}}> {
-		return this.httpRequest.request({
-	{{else}}
-	public {{{name}}}({{>parameters}}): CancelablePromise<{{>result}}> {
-		return this.httpRequest.request({
-	{{/equals}}
-	{{else}}
-	{{#equals @root.httpClient 'angular'}}
-	public {{{name}}}({{>parameters}}): Observable<{{>result}}> {
-		return __request(OpenAPI, this.http, {
-	{{else}}
-	public static {{{name}}}({{>parameters}}): CancelablePromise<{{>result}}> {
-		return __request(OpenAPI, {
-	{{/equals}}
-	{{/if}}
-			method: '{{{method}}}',
-			url: '{{{path}}}',
-			{{#if parametersPath}}
-			path: {
-				{{#each parametersPath}}
-				'{{{prop}}}': {{{name}}},
-				{{/each}}
-			},
-			{{/if}}
-			{{#if parametersCookie}}
-			cookies: {
-				{{#each parametersCookie}}
-				'{{{prop}}}': {{{name}}},
-				{{/each}}
-			},
-			{{/if}}
-			{{#if parametersHeader}}
-			headers: {
-				{{#each parametersHeader}}
-				'{{{prop}}}': {{{name}}},
-				{{/each}}
-			},
-			{{/if}}
-			{{#if parametersQuery}}
-			query: {
-				{{#each parametersQuery}}
-				'{{{prop}}}': {{{name}}},
-				{{/each}}
-			},
-			{{/if}}
-			{{#if parametersForm}}
-			formData: {
-				{{#each parametersForm}}
-				'{{{prop}}}': {{{name}}},
-				{{/each}}
-			},
-			{{/if}}
-			{{#if parametersBody}}
-			{{#equals parametersBody.in 'formData'}}
-			formData: {{{parametersBody.name}}},
-			{{/equals}}
-			{{#equals parametersBody.in 'body'}}
-			body: {{{parametersBody.name}}},
-			{{/equals}}
-			{{#if parametersBody.mediaType}}
-			mediaType: '{{{parametersBody.mediaType}}}',
-			{{/if}}
-			{{/if}}
-			{{#if responseHeader}}
-			responseHeader: '{{{responseHeader}}}',
-			{{/if}}
-			{{#if errors}}
-			errors: {
-				{{#each errors}}
-				{{{code}}}: `{{{escapeDescription description}}}`,
-				{{/each}}
-			},
-			{{/if}}
-		});
-	}
+    {{#if (isEqual name 'getStatus')}} 
+      {{{name}}}: async ({{>parameters}} timeout?: number): Promise<AxiosResponse<{{>result}}>> => {
+      const url = `${baseUrl}{{{escapePath path}}}`;
+      return httpClient.{{{lowerCase method}}}(url, undefined, timeout);
+		  },
+    {{else if (isEqual name 'orderHomeValuation')}}
+      {{{name}}}: async (accessToken: string, {{>parameters}} timeout?: number): Promise<AxiosResponse<{{>result}}>> => {
+      const url = `${baseUrl}{{{escapePath path}}}`;
+      return httpClient.{{{lowerCase method}}}(url, undefined, accessToken, timeout);
+      },
+    {{else if (isEqual name 'createAuthToken')}}
+      {{{name}}}: async (clientId: string, clientSecret: string, scopes: string, actor?: string, subject?: string, timeout = 5000): Promise<AxiosResponse<{{>result}}>> => {
+      const url = `${baseUrl}{{{escapePath path}}}`;
 
+      const params = new URLSearchParams();
+      params.append('client_id', clientId);
+      params.append('client_secret', clientSecret);
+      params.append('scope', scopes);
+      params.append('grant_type', 'client_credentials');
+
+      if (actor) {
+        params.append('actor', actor);
+      }
+      if (subject) {
+        params.append('subject', subject);
+      }
+      
+      return httpClient.{{{lowerCase method}}}(url, params, undefined, timeout, 'application/x-www-form-urlencoded');
+      },
+    {{else}}
+      {{{name}}}: async (accessToken: string, {{>parameters}} timeout?: number): Promise<AxiosResponse<{{>result}}>> => {
+      let url = `${baseUrl}{{{escapePath path}}}`;
+      {{#if parametersQuery}}
+
+      const params = new URLSearchParams();
+
+      {{#each parametersQuery}}
+      if ({{{name}}}) {
+        params.append('{{{name}}}', `${ {{{name}}} }`);
+      }
+      {{/each}}
+      if (params.values.length > 0) {
+			  url += params.toString();
+      }
+			{{/if}}
+      {{#if (isEqual method 'GET')}} 
+      return httpClient.{{{lowerCase method}}}(url, accessToken, timeout);
+      {{else if (isEqual method 'DELETE')}}
+      return httpClient.{{{lowerCase method}}}(url, accessToken, timeout);
+      {{else}}
+      return httpClient.{{{lowerCase method}}}(url, requestBody, accessToken, timeout);
+      {{/if}}
+      },
+    {{/if}}
 	{{/each}}
-}
+});

@@ -104,4 +104,16 @@ export const registerHandlebarHelpers = (root: {
     Handlebars.registerHelper('camelCase', function (value: string): string {
         return camelCase(value);
     });
+
+    Handlebars.registerHelper('lowerCase', function (value: string): string {
+        return value.toLowerCase();
+    });
+
+    Handlebars.registerHelper('escapePath', function (value: string): string {
+        return value.replace('{', `\${`);
+    });
+
+    Handlebars.registerHelper('isEqual', (value1, value2) => {
+        return value1 === value2;
+    });
 };
