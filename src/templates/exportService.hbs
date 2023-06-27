@@ -57,7 +57,7 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       }
       {{/each}}
       if (params.values.length > 0) {
-			  url += params.toString();
+			  url += `?${params.toString()}`;
       }
 			{{/if}}
       {{#if (isEqual method 'GET')}} 
