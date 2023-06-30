@@ -4,8 +4,6 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
-    registries:
-      - npm-github
     target-branch: 'develop'
     open-pull-requests-limit: 10
     versioning-strategy: increase
