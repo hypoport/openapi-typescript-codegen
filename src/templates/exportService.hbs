@@ -18,17 +18,17 @@ export type {{{name}}}{{{@root.postfix}}}Options = {
 export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpClient }: {{{name}}}{{{@root.postfix}}}Options) => ({
 	{{#each operations}}
     {{#if (isEqual name 'getStatus')}} 
-      {{{name}}}: async ({{>parameters}} timeout?: number): Promise<AxiosResponse<{{>result}}>> => {
+      {{{name}}}: async ({timeout}:{timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
       const url = `${baseUrl}{{{escapePath path}}}`;
       return httpClient.{{{lowerCase method}}}(url, undefined, timeout);
 		  },
     {{else if (isEqual name 'orderHomeValuation')}}
-      {{{name}}}: async (accessToken: string, {{>parameters}} timeout?: number): Promise<AxiosResponse<{{>result}}>> => {
+      {{{name}}}: async ({accessToken, {{>deconstruction}} timeout}:{accessToken: string, {{>parameters}} timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
       const url = `${baseUrl}{{{escapePath path}}}`;
       return httpClient.{{{lowerCase method}}}(url, undefined, accessToken, timeout);
       },
     {{else if (isEqual name 'createAuthToken')}}
-      {{{name}}}: async (clientId: string, clientSecret: string, scopes: string, actor?: string, subject?: string, timeout = 5000): Promise<AxiosResponse<{{>result}}>> => {
+      {{{name}}}: async ({clientId, clientSecret, scopes, actor, subject, email, timeout}:{clientId: string, clientSecret: string, scopes: string, actor?: string, subject?: string, email?: string, timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
       const url = `${baseUrl}{{{escapePath path}}}`;
 
       const params = new URLSearchParams();
@@ -43,11 +43,14 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       if (subject) {
         params.append('subject', subject);
       }
+      if (email) {
+        params.append('email', email);
+      }
       
       return httpClient.{{{lowerCase method}}}(url, params, undefined, timeout, 'application/x-www-form-urlencoded');
       },
     {{else}}
-      {{{name}}}: async (accessToken: string, {{>parameters}} timeout?: number): Promise<AxiosResponse<{{>result}}>> => {
+      {{{name}}}: async ({accessToken, {{>deconstruction}} timeout}:{accessToken: string, {{>parameters}} timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
       let url = `${baseUrl}{{{escapePath path}}}`;
       {{#if parametersQuery}}
 
