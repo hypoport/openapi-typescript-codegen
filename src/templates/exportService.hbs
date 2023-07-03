@@ -18,7 +18,7 @@ export type {{{name}}}{{{@root.postfix}}}Options = {
 export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpClient }: {{{name}}}{{{@root.postfix}}}Options) => ({
 	{{#each operations}}
     {{#if (isEqual name 'getStatus')}} 
-      {{{name}}}: async ({timeout}:{timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
+      {{{name}}}: async (timeout?: number): Promise<AxiosResponse<{{>result}}>> => {
       const url = `${baseUrl}{{{escapePath path}}}`;
       return httpClient.{{{lowerCase method}}}(url, undefined, timeout);
 		  },
