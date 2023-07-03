@@ -11,7 +11,7 @@ export class HomecloudApiService {
   readonly {{{lowerCase name}}}Api: {{{name}}}{{{@root.postfix}}};
   {{/each}}
 
-  constructor(stage: 'prod' | 'test') {
+  constructor(stage: 'prod' | 'test' | 'int') {
     const config = createContainer({
       baseUrl: () => constructExternalUrl(stage, 'api'),
       httpClient: httpClientFactory,
