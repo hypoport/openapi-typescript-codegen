@@ -6,20 +6,13 @@ import { {{{name}}}{{{@root.postfix}}}, {{{lowerCase name}}}{{{@root.postfix}}}F
 {{/each}}
 import { httpClientFactory } from '../http/http-client';
 
-type ApiServiceOptions =
-  | { stage: 'prod' | 'test' | 'int' }
-  | {
-      baseUrl: string;
-    };
+type ApiServiceOptions = { stage: 'prod' | 'test' | 'int' } | { baseUrl: string };
 
 export class HomecloudApiService {
   {{#each services}}
   readonly {{{lowerCase name}}}Api: {{{name}}}{{{@root.postfix}}};
   {{/each}}
   
-  /**
-  * 
-  **/
   constructor(serviceConfig: ApiServiceOptions) {
     if ('baseUrl' in serviceConfig && 'stage' in serviceConfig) {
       throw new Error('Please provide only baseUrl or stage, not both!');
