@@ -6,14 +6,27 @@ import { {{{name}}}{{{@root.postfix}}}, {{{lowerCase name}}}{{{@root.postfix}}}F
 {{/each}}
 import { httpClientFactory } from '../http/http-client';
 
+type ApiServiceOptions =
+  | { stage: 'prod' | 'test' | 'int' }
+  | {
+      baseUrl: string;
+    };
+
 export class HomecloudApiService {
   {{#each services}}
   readonly {{{lowerCase name}}}Api: {{{name}}}{{{@root.postfix}}};
   {{/each}}
-
-  constructor(stage: 'prod' | 'test' | 'int') {
+  
+  /**
+  * 
+  **/
+  constructor(serviceConfig: ApiServiceOptions) {
+    if ('baseUrl' in serviceConfig && 'stage' in serviceConfig) {
+      throw new Error('Please provide only baseUrl or stage, not both!');
+    }
+    const baseUrl = 'baseUrl' in serviceConfig ? serviceConfig.baseUrl : constructExternalUrl(serviceConfig.stage, 'api');
     const config = createContainer({
-      baseUrl: () => constructExternalUrl(stage, 'api'),
+      baseUrl: () => baseUrl,
       httpClient: httpClientFactory,
       {{#each services}}
       {{{lowerCase name}}}ApiService: {{{lowerCase name}}}{{{@root.postfix}}}Factory,
