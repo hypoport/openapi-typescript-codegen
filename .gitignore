@@ -11,6 +11,7 @@ junit.xml
 dist
 coverage
 test/generated
+test/models
 test/e2e/generated
 samples/generated
 samples/swagger-codegen-cli-v2.jar

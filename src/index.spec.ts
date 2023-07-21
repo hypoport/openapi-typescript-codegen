@@ -32,4 +32,12 @@ describe('index', () => {
             write: false,
         });
     });
+
+    it('downloads and parses homecloud without issues', async () => {
+        await OpenAPI.generate({
+            input: 'https://test.docs.api.homecloud.de/homecloud-api-specs.json',
+            output: './test/generated/homecloud/',
+            write: false,
+        });
+    });
 });

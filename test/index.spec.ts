@@ -1,6 +1,3 @@
-import { readFileSync } from 'fs';
-import { sync } from 'glob';
-
 import { generate, HttpClient, Indent } from '../';
 
 describe('homecloud', () => {

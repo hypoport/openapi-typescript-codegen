@@ -56,6 +56,9 @@ import templateExportModel from '../templates/exportModel.hbs';
 import templateExportSchema from '../templates/exportSchema.hbs';
 import templateExportService from '../templates/exportService.hbs';
 import templateIndex from '../templates/index.hbs';
+import partialAccessToken from '../templates/partials/accessToken.hbs';
+import partialAccessTokenOrUndefined from '../templates/partials/accessTokenOrUndefined.hbs';
+import partialAccessTokenParam from '../templates/partials/accessTokenParam.hbs';
 import partialBase from '../templates/partials/base.hbs';
 import partialDeconstruction from '../templates/partials/deconstruction.hbs';
 import partialExportComposition from '../templates/partials/exportComposition.hbs';
@@ -67,6 +70,7 @@ import partialIsNullable from '../templates/partials/isNullable.hbs';
 import partialIsReadOnly from '../templates/partials/isReadOnly.hbs';
 import partialIsRequired from '../templates/partials/isRequired.hbs';
 import partialParameters from '../templates/partials/parameters.hbs';
+import partialRequestBodyOrUndefined from '../templates/partials/requestBodyOrUndefined.hbs';
 import partialResult from '../templates/partials/result.hbs';
 import partialSchema from '../templates/partials/schema.hbs';
 import partialSchemaArray from '../templates/partials/schemaArray.hbs';
@@ -139,6 +143,9 @@ export const registerHandlebarTemplates = (root: {
     };
 
     // Partials for the generations of the models, services, etc.
+    Handlebars.registerPartial('accessToken', Handlebars.template(partialAccessToken));
+    Handlebars.registerPartial('accessTokenParam', Handlebars.template(partialAccessTokenParam));
+    Handlebars.registerPartial('accessTokenOrUndefined', Handlebars.template(partialAccessTokenOrUndefined));
     Handlebars.registerPartial('exportEnum', Handlebars.template(partialExportEnum));
     Handlebars.registerPartial('exportInterface', Handlebars.template(partialExportInterface));
     Handlebars.registerPartial('exportComposition', Handlebars.template(partialExportComposition));
@@ -150,6 +157,7 @@ export const registerHandlebarTemplates = (root: {
     Handlebars.registerPartial('parameters', Handlebars.template(partialParameters));
     Handlebars.registerPartial('deconstruction', Handlebars.template(partialDeconstruction));
     Handlebars.registerPartial('result', Handlebars.template(partialResult));
+    Handlebars.registerPartial('requestBodyOrUndefined', Handlebars.template(partialRequestBodyOrUndefined));
     Handlebars.registerPartial('schema', Handlebars.template(partialSchema));
     Handlebars.registerPartial('schemaArray', Handlebars.template(partialSchemaArray));
     Handlebars.registerPartial('schemaDictionary', Handlebars.template(partialSchemaDictionary));

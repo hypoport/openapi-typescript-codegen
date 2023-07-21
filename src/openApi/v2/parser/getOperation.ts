@@ -30,6 +30,7 @@ export const getOperation = (
         description: op.description || null,
         deprecated: op.deprecated === true,
         method: method.toUpperCase(),
+        hasSecurity: !!(op.security && op.security.length > 0),
         path: url,
         parameters: [...pathParams.parameters],
         parametersPath: [...pathParams.parametersPath],

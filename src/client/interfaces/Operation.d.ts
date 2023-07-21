@@ -8,6 +8,7 @@ export interface Operation extends OperationParameters {
     summary: string | null;
     description: string | null;
     deprecated: boolean;
+    hasSecurity: boolean;
     method: string;
     path: string;
     errors: OperationError[];
