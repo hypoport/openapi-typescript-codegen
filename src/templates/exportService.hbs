@@ -40,7 +40,7 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       return httpClient.{{{lowerCase method}}}(url, params, undefined, timeout, 'application/x-www-form-urlencoded');
       },
     {{else}}
-      {{{name}}}: async ({ {{>accessToken}} {{>deconstruction}} timeout}:{ {{>accessTokenParam}} {{>parameters}} timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
+      {{{name}}}: async ({ {{>accessToken}}{{>deconstruction}}timeout}:{ {{>accessTokenParam}}{{>parameters}}timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
       let url = `${baseUrl}{{{escapePath path}}}`;
       {{#if parametersQuery}}
 
