@@ -49,16 +49,14 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       let url = `${baseUrl}{{{escapePath path}}}`;
       {{#if parametersQuery}}
 
-      const params = new URLSearchParams();
+      const urlWithParams = new URL(url);
 
       {{#each parametersQuery}}
       if ({{{name}}}) {
-        params.append('{{{name}}}', `${ {{{name}}} }`);
+        urlWithParams.searchparams.append('{{{name}}}', `${ {{{name}}} }`);
       }
       {{/each}}
-      if (params.values.length > 0) {
-			  url += `?${params.toString()}`;
-      }
+      url = urlWithParams.href
 			{{/if}}
       {{#if (isEqual method 'GET')}} 
         return httpClient.{{{lowerCase method}}}(url, {{>accessTokenOrUndefined}} timeout);
