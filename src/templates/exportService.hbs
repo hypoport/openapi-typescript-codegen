@@ -53,7 +53,7 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
 
       {{#each parametersQuery}}
       if ({{{name}}}) {
-        urlWithParams.searchparams.append('{{{name}}}', `${ {{{name}}} }`);
+        urlWithParams.searchParams.append('{{{name}}}', `${ {{{name}}} }`);
       }
       {{/each}}
       url = urlWithParams.href
