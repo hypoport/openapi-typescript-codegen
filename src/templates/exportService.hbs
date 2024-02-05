@@ -17,7 +17,7 @@ export type {{{name}}}{{{@root.postfix}}}Options = {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpClient }: {{{name}}}{{{@root.postfix}}}Options) => ({
 	{{#each operations}}
-    {{#if (isEqual name 'getStatus')}} 
+    {{#if (isEqual name 'getStatus')}}
       {{{name}}}: async (timeout?: number): Promise<AxiosResponse<{{>result}}>> => {
       const url = `${baseUrl}{{{escapePath path}}}`;
       return httpClient.{{{lowerCase method}}}(url, undefined, timeout);
@@ -41,7 +41,7 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       if (email) {
         params.append('email', email);
       }
-      
+
       return httpClient.{{{lowerCase method}}}(url, params, undefined, timeout, 'application/x-www-form-urlencoded');
       },
     {{else}}
@@ -52,13 +52,13 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       const urlWithParams = new URL(url);
 
       {{#each parametersQuery}}
-      if ({{{name}}}) {
+      if ({{{name}}} !== null || {{{name}}} !== undefined) {
         urlWithParams.searchParams.append('{{{name}}}', `${ {{{name}}} }`);
       }
       {{/each}}
       url = urlWithParams.href
 			{{/if}}
-      {{#if (isEqual method 'GET')}} 
+      {{#if (isEqual method 'GET')}}
         return httpClient.{{{lowerCase method}}}(url, {{>accessTokenOrUndefined}} timeout);
       {{else if (isEqual method 'DELETE')}}
         return httpClient.{{{lowerCase method}}}(url, {{>accessTokenOrUndefined}} timeout);
