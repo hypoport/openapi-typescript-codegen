@@ -52,7 +52,8 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       const urlWithParams = new URL(url);
 
       {{#each parametersQuery}}
-      if ({{{name}}} !== null || {{{name}}} !== undefined) {
+
+	  if (typeof {{{name}}} === 'number' || {{{name}}}) {
         urlWithParams.searchParams.append('{{{name}}}', `${ {{{name}}} }`);
       }
       {{/each}}
