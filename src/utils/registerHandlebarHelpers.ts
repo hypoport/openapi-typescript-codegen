@@ -110,7 +110,7 @@ export const registerHandlebarHelpers = (root: {
     });
 
     Handlebars.registerHelper('escapePath', function (value: string): string {
-        return value.replace('{', `\${`);
+        return value.replaceAll('{', `\${`);
     });
 
     Handlebars.registerHelper('isEqual', (value1, value2) => {
