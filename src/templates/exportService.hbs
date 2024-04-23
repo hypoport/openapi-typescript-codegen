@@ -23,7 +23,7 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       return httpClient.{{{lowerCase method}}}(url, undefined, timeout);
 		  },
     {{else if (isEqual name 'createAuthToken')}}
-      {{{name}}}: async ({clientId, clientSecret, scopes, actor, subject, email, timeout}:{clientId: string, clientSecret: string, scopes: string, actor?: string, subject?: string, email?: string, timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
+      {{{name}}}: async ({clientId, clientSecret, scopes, actor, subject, timeout}:{clientId: string, clientSecret: string, scopes: string, actor?: string, subject?: string, timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
       const url = `${baseUrl}{{{escapePath path}}}`;
 
       const params = new URLSearchParams();
@@ -37,9 +37,6 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       }
       if (subject) {
         params.append('subject', subject);
-      }
-      if (email) {
-        params.append('email', email);
       }
 
       return httpClient.{{{lowerCase method}}}(url, params, undefined, timeout, 'application/x-www-form-urlencoded');
