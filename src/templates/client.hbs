@@ -1,9 +1,9 @@
 import { createContainer } from 'thirty/inject';
 
+import { httpClientFactory } from '../http/http-client';
 {{#each services}}
 import { {{{name}}}{{{@root.postfix}}}, {{{lowerCase name}}}{{{@root.postfix}}}Factory } from './services/{{{name}}}{{{@root.postfix}}}';
 {{/each}}
-import { httpClientFactory } from '../http/http-client';
 
 type ApiServiceOptions = { stage: 'prod' | 'test' | 'int' } | { baseUrl: string };
 
