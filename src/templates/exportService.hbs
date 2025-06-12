@@ -21,11 +21,16 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       const url = `${baseUrl}{{{escapePath path}}}`;
       return httpClient.{{{lowerCase method}}}(url, undefined, timeout);
 		  },
-	{{else if (isEqual name 'createTrackingEvent')}}
+	  {{else if (isEqual name 'createTrackingEvent')}}
 		{{{name}}}: async ({username, password, {{>deconstruction}}timeout}: {username: string, password: string, {{>parameters}}timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
 		const url = `${baseUrl}{{{escapePath path}}}`;
 		return httpClient.{{{lowerCase method}}}(url, {{>requestBodyOrUndefined}} {username, password}, timeout);
 		},
+    {{else if (isEqual name 'patchUserProfilePicture')}}
+		{{{name}}}: async ({ {{>accessToken}} formData, timeout}: { {{>accessTokenParam}}{{>parameters}}timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
+		const url = `${baseUrl}{{{escapePath path}}}`;
+		return httpClient.{{{lowerCase method}}}(url, formData, {{>accessTokenOrUndefined}}timeout, 'multipart/form-data');
+    },
     {{else if (isEqual name 'createAuthToken')}}
       {{{name}}}: async ({clientId, clientSecret, scopes, actor, subject, timeout}:{clientId: string, clientSecret: string, scopes: string, actor?: string, subject?: string, timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
       const url = `${baseUrl}{{{escapePath path}}}`;
