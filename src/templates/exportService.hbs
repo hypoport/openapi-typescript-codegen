@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 {{#each imports}}
 {{#if (isEqual this 'CreateAuthTokenRequestModel')}}
 {{else}}
-import { {{{this}}} } from '../../../models';
+import { {{{this}}} } from '../../../models/generated/types.gen';
 {{/if}}
 {{/each}}
 import { HttpClient } from '../../http/http-client';
@@ -27,7 +27,7 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
 		return httpClient.{{{lowerCase method}}}(url, {{>requestBodyOrUndefined}} {username, password}, timeout);
 		},
     {{else if (isEqual name 'createAuthToken')}}
-      {{{name}}}: async ({clientId, clientSecret, scopes, actor, subject, timeout}:{clientId: string, clientSecret: string, scopes: string, actor?: string, subject?: string, timeout?: number}): Promise<AxiosResponse<{{>result}}>> => {
+      {{{name}}}: async ({clientId, clientSecret, scopes, actor, subject, timeout, traceId}:{clientId: string, clientSecret: string, scopes: string, actor?: string, subject?: string, timeout?: number, traceId?: string}): Promise<AxiosResponse<{{>result}}>> => {
       const url = `${baseUrl}{{{escapePath path}}}`;
 
       const params = new URLSearchParams();
@@ -41,6 +41,9 @@ export const {{{lowerCase name}}}{{{@root.postfix}}}Factory = ({ baseUrl, httpCl
       }
       if (subject) {
         params.append('subject', subject);
+      }
+      if (traceId) {
+        params.append('traceId', traceId);
       }
 
       return httpClient.{{{lowerCase method}}}(url, params, undefined, timeout, 'application/x-www-form-urlencoded');
